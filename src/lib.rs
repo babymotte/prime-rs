@@ -1,8 +1,10 @@
+use rayon::prelude::*;
+
 pub fn is_prime(n: u64) -> bool {
     n > 1 && {
         let limit = (n as f64).sqrt() as u64 + 1;
-        let mut range = 2..limit;
-        !range.any(|i| n % i == 0)
+        let range = 2..limit;
+        !range.into_par_iter().any(|i| n % i == 0)
     }
 }
 
